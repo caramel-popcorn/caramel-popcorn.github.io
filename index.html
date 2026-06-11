@@ -10,14 +10,26 @@
     <title>Caramel Popcorn | Personal Website</title>
     <style>
       :root {
-        --bg: #f5f7f8;
+        --canvas-soft: #f6f5f4;
         --surface: #ffffff;
-        --text: #1f2933;
-        --muted: #52606d;
-        --accent: #0f766e;
-        --accent-dark: #115e59;
-        --border: #d9e2ec;
-        --shadow: 0 18px 45px rgba(31, 41, 51, 0.1);
+        --ink: #000000;
+        --ink-secondary: #31302e;
+        --ink-muted: #615d59;
+        --ink-faint: #a39e98;
+        --hairline: #e6e6e6;
+        --primary: #0075de;
+        --primary-active: #005bab;
+        --secondary: #213183;
+        --sticker-sky: #62aef0;
+        --sticker-purple: #d6b6f6;
+        --sticker-pink: #ff64c8;
+        --sticker-orange: #dd5b00;
+        --sticker-teal: #2a9d99;
+        --sticker-green: #1aae39;
+        --shadow-soft: rgba(0, 0, 0, 0.01) 0 0.175px 1.041px,
+          rgba(0, 0, 0, 0.02) 0 0.8px 2.925px,
+          rgba(0, 0, 0, 0.027) 0 2.025px 7.847px,
+          rgba(0, 0, 0, 0.04) 0 4px 18px;
       }
 
       * {
@@ -30,39 +42,39 @@
 
       body {
         margin: 0;
-        background: var(--bg);
-        color: var(--text);
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        line-height: 1.6;
+        background: var(--canvas-soft);
+        color: rgba(0, 0, 0, 0.95);
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Helvetica, Arial, sans-serif;
+        font-feature-settings: "lnum", "locl";
+        line-height: 1.5;
       }
 
       a {
-        color: var(--accent-dark);
-        text-decoration-thickness: 0.12em;
+        color: var(--primary);
+        text-decoration-thickness: 0.11em;
         text-underline-offset: 0.22em;
       }
 
       a:hover {
-        color: var(--accent);
+        color: var(--primary-active);
       }
 
-      a:focus-visible,
-      button:focus-visible {
-        outline: 3px solid var(--accent);
+      a:focus-visible {
+        outline: 3px solid var(--primary);
         outline-offset: 4px;
       }
 
       .skip-link {
         position: absolute;
-        left: 1rem;
-        top: 1rem;
-        z-index: 10;
-        transform: translateY(-150%);
-        border-radius: 0.4rem;
-        background: var(--text);
-        color: #ffffff;
-        padding: 0.65rem 0.9rem;
+        left: 16px;
+        top: 16px;
+        z-index: 20;
+        transform: translateY(-160%);
+        border-radius: 8px;
+        background: var(--ink);
+        color: var(--surface);
+        padding: 10px 14px;
       }
 
       .skip-link:focus {
@@ -70,24 +82,33 @@
       }
 
       .page {
-        width: min(1120px, calc(100% - 2rem));
+        width: min(1120px, calc(100% - 32px));
         margin: 0 auto;
       }
 
       header {
-        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid var(--hairline);
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(14px);
       }
 
       nav {
         display: flex;
+        min-height: 64px;
         align-items: center;
         justify-content: space-between;
-        gap: 1rem;
+        gap: 16px;
       }
 
       .brand {
-        color: var(--text);
-        font-size: 1rem;
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        color: var(--ink);
+        font-size: 16px;
         font-weight: 700;
         text-decoration: none;
       }
@@ -96,7 +117,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-end;
-        gap: 0.4rem 0.9rem;
+        gap: 4px;
         margin: 0;
         padding: 0;
         list-style: none;
@@ -104,212 +125,412 @@
 
       .nav-links a {
         display: inline-flex;
-        min-height: 2.5rem;
+        min-height: 40px;
         align-items: center;
-        border-radius: 0.35rem;
-        color: var(--muted);
-        font-size: 0.95rem;
-        font-weight: 650;
+        border-radius: 8px;
+        color: var(--ink-secondary);
+        font-size: 15px;
+        font-weight: 500;
+        padding: 4px 12px;
         text-decoration: none;
       }
 
       .nav-links a:hover {
-        color: var(--accent-dark);
+        background: var(--canvas-soft);
+        color: var(--ink);
       }
 
       main {
-        padding-bottom: 4rem;
+        overflow: hidden;
+      }
+
+      .hero-band {
+        position: relative;
+        background: var(--secondary);
+        color: var(--surface);
+        overflow: hidden;
+      }
+
+      .hero-band::before,
+      .hero-band::after {
+        position: absolute;
+        content: "";
+        border-radius: 9999px;
+        opacity: 0.9;
+        pointer-events: none;
+      }
+
+      .hero-band::before {
+        width: 12px;
+        height: 12px;
+        left: 9%;
+        top: 26%;
+        background: var(--sticker-sky);
+        box-shadow: 84px 118px 0 var(--sticker-pink),
+          212px 34px 0 var(--sticker-green),
+          56vw 76px 0 var(--sticker-orange),
+          72vw 248px 0 var(--sticker-purple);
+      }
+
+      .hero-band::after {
+        width: 8px;
+        height: 8px;
+        right: 10%;
+        top: 18%;
+        background: var(--surface);
+        box-shadow: -112px 96px 0 rgba(255, 255, 255, 0.75),
+          -64vw 240px 0 rgba(255, 255, 255, 0.56),
+          -24vw 330px 0 rgba(255, 255, 255, 0.5);
       }
 
       .hero {
+        position: relative;
+        z-index: 1;
         display: grid;
-        grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+        grid-template-columns: minmax(0, 1.04fr) minmax(300px, 0.78fr);
         align-items: center;
-        gap: clamp(2rem, 6vw, 5rem);
-        min-height: calc(100vh - 5.5rem);
-        padding: clamp(2rem, 7vw, 6rem) 0;
+        gap: 72px;
+        min-height: calc(100vh - 64px);
+        padding: 88px 0 96px;
       }
 
-      .eyebrow {
-        margin: 0 0 0.7rem;
-        color: var(--accent-dark);
-        font-size: 0.86rem;
-        font-weight: 800;
-        letter-spacing: 0;
-        text-transform: uppercase;
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.33;
+        padding: 4px 10px;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
       }
 
       h1,
       h2,
       h3 {
-        line-height: 1.1;
+        color: var(--ink);
+        font-weight: 700;
+        letter-spacing: 0;
       }
 
       h1 {
         max-width: 11ch;
-        margin: 0;
-        font-size: clamp(3rem, 10vw, 6.8rem);
+        margin-bottom: 24px;
+        color: var(--surface);
+        font-size: 64px;
+        line-height: 1;
+      }
+
+      h2 {
+        margin-bottom: 16px;
+        font-size: 40px;
+        line-height: 1.1;
+      }
+
+      h3 {
+        margin-bottom: 10px;
+        font-size: 22px;
+        line-height: 1.27;
       }
 
       .intro {
-        max-width: 36rem;
-        margin: 1.25rem 0 0;
-        color: var(--muted);
-        font-size: clamp(1.05rem, 2vw, 1.28rem);
+        max-width: 580px;
+        margin-bottom: 0;
+        color: rgba(255, 255, 255, 0.82);
+        font-size: 20px;
+        line-height: 1.4;
       }
 
       .actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.85rem;
-        margin-top: 2rem;
+        gap: 12px;
+        margin-top: 32px;
       }
 
       .button {
         display: inline-flex;
-        min-height: 2.9rem;
+        min-height: 48px;
         align-items: center;
         justify-content: center;
-        border: 2px solid var(--accent-dark);
-        border-radius: 0.4rem;
-        padding: 0.72rem 1rem;
-        background: var(--accent-dark);
-        color: #ffffff;
-        font-weight: 750;
+        border: 1px solid var(--primary);
+        border-radius: 9999px;
+        background: var(--primary);
+        color: var(--surface);
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        padding: 10px 18px;
         text-decoration: none;
+        transition: background-color 160ms ease, border-color 160ms ease,
+          transform 120ms ease;
       }
 
       .button:hover {
-        background: var(--accent);
-        color: #ffffff;
+        border-color: var(--primary-active);
+        background: var(--primary-active);
+        color: var(--surface);
+      }
+
+      .button:active {
+        transform: scale(0.96);
       }
 
       .button.secondary {
-        background: transparent;
-        color: var(--accent-dark);
+        border-color: var(--surface);
+        background: var(--surface);
+        color: var(--ink);
+        box-shadow: var(--shadow-soft);
       }
 
       .button.secondary:hover {
-        background: rgba(15, 118, 110, 0.08);
+        border-color: var(--hairline);
+        background: var(--surface);
+        color: var(--ink);
+      }
+
+      .profile-card {
+        position: relative;
+        justify-self: end;
+        width: min(100%, 390px);
+      }
+
+      .profile-card::before,
+      .profile-card::after {
+        position: absolute;
+        z-index: 2;
+        content: "";
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: var(--shadow-soft);
+        pointer-events: none;
+      }
+
+      .profile-card::before {
+        width: 64px;
+        height: 64px;
+        right: -18px;
+        top: 36px;
+        border-radius: 16px;
+        background: var(--sticker-purple);
+      }
+
+      .profile-card::after {
+        width: 42px;
+        height: 42px;
+        left: -18px;
+        bottom: 64px;
+        border-radius: 9999px;
+        background: var(--sticker-orange);
       }
 
       .profile-frame {
-        justify-self: center;
-        width: min(100%, 380px);
+        position: relative;
+        z-index: 1;
+        width: 100%;
         aspect-ratio: 4 / 5;
         margin: 0;
         overflow: hidden;
         border: 8px solid var(--surface);
-        border-radius: 0.5rem;
-        box-shadow: var(--shadow);
+        border-radius: 16px;
+        background: var(--surface);
+        box-shadow: rgba(0, 0, 0, 0.01) 0 0.175px 1.041px,
+          rgba(0, 0, 0, 0.02) 0 0.8px 2.925px,
+          rgba(0, 0, 0, 0.027) 0 2.025px 7.847px,
+          rgba(0, 0, 0, 0.04) 0 4px 18px,
+          rgba(0, 0, 0, 0.05) 0 23px 52px;
       }
 
       .profile-frame img {
+        display: block;
         width: 100%;
         height: 100%;
-        display: block;
         object-fit: cover;
       }
 
       .section {
-        padding: clamp(2.4rem, 6vw, 4.5rem) 0;
-        border-top: 1px solid var(--border);
+        padding: 84px 0;
+      }
+
+      .section + .section {
+        padding-top: 32px;
       }
 
       .section-header {
-        max-width: 42rem;
-        margin-bottom: 1.5rem;
+        max-width: 700px;
+        margin-bottom: 28px;
       }
 
-      .section h2 {
-        margin: 0;
-        font-size: clamp(1.75rem, 4vw, 3rem);
+      .eyebrow {
+        display: inline-flex;
+        margin-bottom: 12px;
+        border-radius: 9999px;
+        background: var(--surface);
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.33;
+        padding: 4px 8px;
       }
 
       .section p {
-        color: var(--muted);
+        color: var(--ink-muted);
+        font-size: 16px;
       }
 
       .grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1rem;
+        gap: 16px;
       }
 
       .card {
+        position: relative;
         min-height: 100%;
-        border: 1px solid var(--border);
-        border-radius: 0.5rem;
+        overflow: hidden;
+        border: 1px solid var(--hairline);
+        border-radius: 12px;
         background: var(--surface);
-        padding: 1.2rem;
+        padding: 24px;
+      }
+
+      .card::before {
+        display: block;
+        width: 56px;
+        height: 10px;
+        margin-bottom: 28px;
+        border-radius: 9999px;
+        content: "";
+      }
+
+      .card:nth-child(1)::before {
+        background: var(--sticker-pink);
+      }
+
+      .card:nth-child(2)::before {
+        background: var(--sticker-teal);
+      }
+
+      .card:nth-child(3)::before {
+        background: var(--sticker-green);
       }
 
       .card h3 {
-        margin: 0 0 0.6rem;
-        font-size: 1.12rem;
+        color: var(--ink);
       }
 
       .card p {
-        margin: 0;
+        margin-bottom: 0;
+        color: var(--ink-muted);
       }
 
       .resume-panel {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
         align-items: center;
-        gap: 1rem;
-        border: 1px solid var(--border);
-        border-radius: 0.5rem;
+        gap: 24px;
+        border: 1px solid var(--hairline);
+        border-radius: 12px;
         background: var(--surface);
-        padding: clamp(1.2rem, 4vw, 2rem);
+        padding: 32px;
+        box-shadow: var(--shadow-soft);
       }
 
       .resume-panel p {
-        margin: 0.4rem 0 0;
+        margin-bottom: 0;
+        color: var(--ink-muted);
+      }
+
+      .contact-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .contact-links a {
+        display: inline-flex;
+        min-height: 40px;
+        align-items: center;
+        border: 1px solid var(--hairline);
+        border-radius: 8px;
+        background: var(--surface);
+        color: var(--ink-secondary);
+        font-size: 15px;
+        font-weight: 500;
+        padding: 4px 14px;
+        text-decoration: none;
+      }
+
+      .contact-links a:hover {
+        color: var(--primary);
       }
 
       footer {
-        padding: 2rem 0;
-        border-top: 1px solid var(--border);
-        color: var(--muted);
-        font-size: 0.95rem;
+        border-top: 1px solid var(--hairline);
+        color: var(--ink-secondary);
+        font-size: 14px;
+        line-height: 1.43;
+        padding: 32px 0;
       }
 
-      @media (max-width: 760px) {
+      footer p {
+        margin: 0;
+      }
+
+      @media (max-width: 840px) {
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 40px;
+          min-height: auto;
+          padding: 64px 0 72px;
+        }
+
+        .profile-card {
+          justify-self: start;
+          width: min(100%, 340px);
+        }
+
+        .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 600px) {
         .page {
-          width: min(100% - 1.25rem, 1120px);
+          width: min(100% - 24px, 1120px);
         }
 
         nav {
           align-items: flex-start;
           flex-direction: column;
+          padding: 10px 0 12px;
         }
 
         .nav-links {
           justify-content: flex-start;
         }
 
-        .hero {
-          grid-template-columns: 1fr;
-          min-height: auto;
-          padding-top: 2rem;
-        }
-
         h1 {
-          max-width: 9ch;
+          max-width: 10ch;
+          font-size: 44px;
         }
 
-        .profile-frame {
-          justify-self: start;
-          width: min(100%, 280px);
+        h2 {
+          font-size: 32px;
         }
 
-        .grid {
-          grid-template-columns: 1fr;
-        }
-
-        .resume-panel {
-          grid-template-columns: 1fr;
+        .intro {
+          font-size: 18px;
         }
 
         .actions,
@@ -320,14 +541,47 @@
         .button {
           width: 100%;
         }
+
+        .profile-card {
+          width: min(100%, 280px);
+        }
+
+        .profile-card::before {
+          right: -10px;
+          width: 48px;
+          height: 48px;
+        }
+
+        .profile-card::after {
+          left: -10px;
+          width: 34px;
+          height: 34px;
+        }
+
+        .section {
+          padding: 56px 0;
+        }
+
+        .section + .section {
+          padding-top: 16px;
+        }
+
+        .grid,
+        .resume-panel {
+          grid-template-columns: 1fr;
+        }
+
+        .resume-panel {
+          padding: 24px;
+        }
       }
     </style>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
 
-    <header class="page">
-      <nav aria-label="Primary navigation">
+    <header>
+      <nav class="page" aria-label="Primary navigation">
         <a class="brand" href="#">Caramel Popcorn</a>
         <ul class="nav-links">
           <li><a href="#about">About</a></li>
@@ -338,41 +592,46 @@
       </nav>
     </header>
 
-    <main id="main" class="page">
-      <section class="hero" aria-labelledby="hero-title">
-        <div>
-          <p class="eyebrow">Personal website</p>
-          <h1 id="hero-title">Caramel Popcorn</h1>
-          <p class="intro">
-            A simple home for selected work, background, and contact details,
-            built around thoughtful projects and clear communication.
-          </p>
-          <div class="actions" aria-label="Featured links">
-            <a class="button" href="assets/cv.pdf">View CV</a>
-            <a class="button secondary" href="#contact">Get in touch</a>
+    <main id="main">
+      <section class="hero-band" aria-labelledby="hero-title">
+        <div class="hero page">
+          <div>
+            <p class="badge">Personal website</p>
+            <h1 id="hero-title">Caramel Popcorn</h1>
+            <p class="intro">
+              A calm, document-like home for selected work, background, and
+              contact details, with just enough color to make the page feel
+              alive.
+            </p>
+            <div class="actions" aria-label="Featured links">
+              <a class="button" href="assets/cv.pdf">View CV</a>
+              <a class="button secondary" href="#contact">Get in touch</a>
+            </div>
+          </div>
+          <div class="profile-card" aria-label="Profile portrait">
+            <figure class="profile-frame">
+              <img
+                src="assets/profile.jpg"
+                alt="Profile portrait for Caramel Popcorn"
+              />
+            </figure>
           </div>
         </div>
-        <figure class="profile-frame">
-          <img
-            src="assets/profile.jpg"
-            alt="Profile portrait for Caramel Popcorn"
-          />
-        </figure>
       </section>
 
-      <section class="section" id="about" aria-labelledby="about-title">
+      <section class="section page" id="about" aria-labelledby="about-title">
         <div class="section-header">
           <p class="eyebrow">About</p>
           <h2 id="about-title">Thoughtful work, clearly presented.</h2>
           <p>
             I care about making ideas easier to understand and systems easier to
             use. My work brings together practical problem solving, careful
-            writing, and a steady attention to detail.
+            writing, and steady attention to detail.
           </p>
         </div>
       </section>
 
-      <section class="section" id="work" aria-labelledby="work-title">
+      <section class="section page" id="work" aria-labelledby="work-title">
         <div class="section-header">
           <p class="eyebrow">Selected work</p>
           <h2 id="work-title">Projects and focus areas</h2>
@@ -381,9 +640,8 @@
           <article class="card">
             <h3>Project One</h3>
             <p>
-              A focused project space for sharing research, design, writing, or
-              engineering work with enough context for visitors to understand
-              the outcome.
+              A focused space for research, design, writing, or engineering work
+              with enough context for visitors to understand the outcome.
             </p>
           </article>
           <article class="card">
@@ -403,7 +661,7 @@
         </div>
       </section>
 
-      <section class="section" id="resume" aria-labelledby="resume-title">
+      <section class="section page" id="resume" aria-labelledby="resume-title">
         <div class="resume-panel">
           <div>
             <p class="eyebrow">CV</p>
@@ -417,20 +675,26 @@
         </div>
       </section>
 
-      <section class="section" id="contact" aria-labelledby="contact-title">
+      <section class="section page" id="contact" aria-labelledby="contact-title">
         <div class="section-header">
           <p class="eyebrow">Contact</p>
           <h2 id="contact-title">Let's connect.</h2>
           <p>
-            The best way to keep this section useful is to add a preferred email
-            address, GitHub profile, LinkedIn page, or portfolio archive.
+            For collaborations, questions, or project notes, the most useful
+            links are gathered here.
           </p>
         </div>
+        <ul class="contact-links" aria-label="Contact links">
+          <li><a href="https://github.com/caramel-popcorn">GitHub</a></li>
+          <li><a href="assets/cv.pdf">CV PDF</a></li>
+        </ul>
       </section>
     </main>
 
-    <footer class="page">
-      <p>&copy; 2026 Caramel Popcorn. Built for GitHub Pages.</p>
+    <footer>
+      <div class="page">
+        <p>&copy; 2026 Caramel Popcorn. Built for GitHub Pages.</p>
+      </div>
     </footer>
   </body>
 </html>
